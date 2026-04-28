@@ -1,0 +1,226 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  nama         String
+  email        String   @unique
+  passwordHash String
+  aktif        Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model KategoriAset {
+  id            String   @id @default(uuid())
+  namaKategori  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  golongan      GolonganAset[]
+}
+
+model GolonganAset {
+  id            String   @id @default(uuid())
+  kategoriId    String
+  kategori      KategoriAset @relation(fields: [kategoriId], references: [id])
+
+  kodeGolongan  String   @unique
+  namaGolongan  String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+
+  properti      Properti[]
+  inventaris    Inventaris[]
+  kendaraan     Kendaraan[]
+  sertifikat    SertifikatTanah[]
+}
+
+model Properti {
+  id             String   @id @default(uuid())
+  golonganId     String
+  golongan       GolonganAset @relation(fields: [golonganId], references: [id])
+
+  namaProperti   String
+  koordinat      Json?
+  geojson        Json?
+  foto           String?
+
+  bertingkat     Boolean  @default(false)
+  jumlahLantai   Int      @default(1)
+  keterangan     String?
+
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  lantai         Lantai[]
+  ruangan        Ruangan[]
+}
+
+model Lantai {
+  id            String   @id @default(uuid())
+  propertiId    String
+  properti      Properti @relation(fields: [propertiId], references: [id])
+
+  namaLantai    String?
+  createdAt     DateTime @default(now())
+  ruangan       Ruangan[]
+
+  @@unique([propertiId])
+}
+
+model Ruangan {
+  id            String   @id @default(uuid())
+  propertiId    String
+  properti      Properti @relation(fields: [propertiId], references: [id])
+
+  lantaiId      String?
+  lantai        Lantai?  @relation(fields: [lantaiId], references: [id])
+
+  kodeRuangan   String?
+  namaRuangan   String
+  keterangan    String?
+
+  createdAt     DateTime @default(now())
+
+
+  inventaris    Inventaris[]
+
+  @@unique([propertiId, kodeRuangan])
+}
+
+model Inventaris {
+  id            String   @id @default(uuid())
+  golonganId    String
+  golongan      GolonganAset @relation(fields: [golonganId], references: [id])
+
+  ruanganId     String
+  ruangan       Ruangan @relation(fields: [ruanganId], references: [id])
+
+  namaBarang    String
+  tanggalPerolehan DateTime
+  hargaPerolehan Decimal
+  bahanMerk String?
+  jumlah        Int      @default(1)
+  kondisi       String   @default("baik")
+  keterangan    String?
+  foto String?
+  pengguna String?
+  masaManfaat   Int?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Kendaraan {
+  id             String   @id @default(uuid())
+  golonganId     String
+  golongan       GolonganAset @relation(fields: [golonganId], references: [id])
+
+  namaKendaraan  String
+  merek          String?
+  tipe           String?
+  noPolisi       String?  @unique
+  tahunPerolehan Int?
+  pengguna       String
+  kondisi        String   @default("baik")
+  keterangan     String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SertifikatTanah {
+  id                 String   @id @default(uuid())
+  golonganId         String
+  golongan           GolonganAset @relation(fields: [golonganId], references: [id])
+
+  noSertifikat       String   @unique
+  namaJemaat         String
+  namaMataJemaat     String
+  namaKlasis         String
+  letakTanah         String
+  luasM2             Float?
+  noHak              String?
+  nib                String?
+  tanggalPerolehan   DateTime?
+  keterangan         String?
+  koordinat          String?
+  geojson            String?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model RiwayatMutasi {
+  id                       String   @id @default(uuid())
+
+  inventarisId             String?
+
+  ruanganAsalId            String?
+  ruanganTujuanId          String?
+
+  namaBarangSnapshot       String
+  golonganSnapshot         String
+  ruanganAsalSnapshot      String
+  ruanganTujuanSnapshot    String
+  propertiAsalSnapshot     String
+  propertiTujuanSnapshot   String
+
+  jumlah                   Int
+  kondisiSebelum           String
+  kondisiSesudah           String
+  tanggalMutasi            DateTime
+
+  keterangan               String?
+  createdAt                DateTime @default(now())
+}
+
+model RiwayatMaintenance {
+  id                 String   @id @default(uuid())
+
+  asetType           String
+  asetId             String?
+
+  namaAsetSnapshot   String
+  golonganSnapshot   String
+  lokasiSnapshot     String?
+  penggunaSnapshot   String?
+
+  jenisTindakan      String
+  kondisiSebelum     String
+  kondisiSesudah     String
+  tanggal            DateTime
+  biaya              Decimal?
+
+  keterangan         String?
+  createdAt          DateTime @default(now())
+}
+
+model RiwayatPenghapusan {
+  id                 String   @id @default(uuid())
+
+  asetType           String
+  asetId             String
+
+  namaAsetSnapshot   String
+  golonganSnapshot   String
+  ruanganSnapshot    String?
+  propertiSnapshot   String?
+  penggunaSnapshot   String?
+
+  kondisiSnapshot    String
+  alasan             String
+  jumlah             Int
+  tanggal            DateTime
+
+  keterangan         String?
+  createdAt          DateTime @default(now())
+}
