@@ -16,7 +16,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         asetType: data.asetType,
         asetId: data.asetId,
         alasan: data.alasan,
-        tanggalPenghapusan: data.tanggalPenghapusan ? new Date(data.tanggalPenghapusan) : undefined,
+        tanggal: data.tanggal ? new Date(data.tanggal) : undefined,
         keterangan: data.keterangan || null,
       }
     });

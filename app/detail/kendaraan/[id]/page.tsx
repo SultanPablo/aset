@@ -27,7 +27,7 @@ export default async function KendaraanPublicDetail({ params }: { params: Promis
            <div className="grid grid-cols-2 gap-4">
               <div>
                 <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Spesifikasi Mesin</h2>
-                <p className="text-sm font-medium text-slate-700">{item.spesifikasi || "-"}</p>
+                <p className="text-sm font-medium text-slate-700">{item.tipe || "-"}</p>
               </div>
               <div>
                 <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Kondisi</h2>
@@ -39,12 +39,12 @@ export default async function KendaraanPublicDetail({ params }: { params: Promis
 
            <div className="border-t pt-4 flex justify-between">
              <div>
-               <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Warna</h2>
-               <p className="text-sm font-medium text-slate-700">{item.warna || "-"}</p>
+               <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Keterangan</h2>
+               <p className="text-sm font-medium text-slate-700">{item.keterangan || "-"}</p>
              </div>
              <div>
-               <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Tahun</h2>
-               <p className="text-sm font-medium text-slate-700">{item.tahunPembuatan || "-"}</p>
+               <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Tahun Perolehan</h2>
+               <p className="text-sm font-medium text-slate-700">{item.tahunPerolehan || "-"}</p>
              </div>
            </div>
 

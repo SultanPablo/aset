@@ -6,17 +6,16 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     const id = (await params).id;
     const data = await request.json();
 
-    if (!data.asetType || !data.asetId) {
+    if (!data) {
       return NextResponse.json({ error: 'Data mutasi tidak lengkap' }, { status: 400 });
     }
 
     const mutasi = await prisma.riwayatMutasi.update({
       where: { id },
       data: {
-        asetType: data.asetType,
-        asetId: data.asetId,
-        ruanganLamaId: data.ruanganLamaId || null,
-        ruanganBaruId: data.ruanganBaruId || null,
+        inventarisId: data.inventarisId,
+        ruanganAsalId: data.ruanganAsalId,
+        ruanganTujuanId: data.ruanganTujuanId,
         tanggalMutasi: data.tanggalMutasi ? new Date(data.tanggalMutasi) : undefined,
         keterangan: data.keterangan || null,
       }

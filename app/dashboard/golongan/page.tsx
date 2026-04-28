@@ -36,8 +36,8 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function GolonganPage() {
-  const [data, setData] = useState([])
-  const [kategoriList, setKategoriList] = useState([])
+  const [data, setData] = useState<any[]>([])
+  const [kategoriList, setKategoriList] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   const [dialogOpen, setDialogOpen] = useState(false)

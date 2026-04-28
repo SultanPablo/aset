@@ -6,7 +6,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     const id = (await params).id;
     const data = await request.json();
 
-    if (!data.asetType || !data.asetId || !data.tanggalMaintenance) {
+    if (!data.asetType || !data.asetId || !data.tanggal) {
       return NextResponse.json({ error: 'Data maintenance tidak lengkap' }, { status: 400 });
     }
 
@@ -15,7 +15,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       data: {
         asetType: data.asetType,
         asetId: data.asetId,
-        tanggalMaintenance: new Date(data.tanggalMaintenance),
+        tanggal: new Date(data.tanggal),
         keterangan: data.keterangan || null,
         biaya: data.biaya ? parseFloat(data.biaya) : null,
       }

@@ -7,7 +7,7 @@ import dynamic from "next/dynamic"
 const MapLeaflet = dynamic(() => import("@/components/MapLeaflet"), { ssr: false })
 
 export default function PetaPage() {
-  const [dataList, setDataList] = useState([])
+  const [dataList, setDataList] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

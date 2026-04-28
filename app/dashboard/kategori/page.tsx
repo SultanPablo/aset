@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export default function KategoriPage() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   const [dialogOpen, setDialogOpen] = useState(false)

@@ -19,7 +19,7 @@ export default async function InventarisPublicDetail({ params }: { params: Promi
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg border overflow-hidden">
         <div className="bg-blue-900 text-white p-6 text-center">
            <h1 className="text-2xl font-bold tracking-tight mb-1">Status Aset</h1>
-           <p className="text-blue-200 text-sm opacity-90">{item.kodeBarang || item.id}</p>
+           <p className="text-blue-200 text-sm opacity-90">{item.id}</p>
         </div>
         <div className="p-6 space-y-6">
            <div>
@@ -30,7 +30,7 @@ export default async function InventarisPublicDetail({ params }: { params: Promi
            <div className="grid grid-cols-2 gap-4">
               <div>
                 <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Spesifikasi</h2>
-                <p className="text-sm font-medium text-slate-700">{item.spesifikasi || "-"}</p>
+                <p className="text-sm font-medium text-slate-700">{item.bahanMerk || "-"}</p>
               </div>
               <div>
                 <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Kondisi</h2>
@@ -60,7 +60,7 @@ export default async function InventarisPublicDetail({ params }: { params: Promi
               </div>
               <div>
                 <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Penanggungjawab</h2>
-                <p className="text-sm text-slate-600">{item.penanggungJawab || "-"}</p>
+                <p className="text-sm text-slate-600">{item.pengguna || "-"}</p>
               </div>
            </div>
         </div>
